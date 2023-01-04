@@ -1,0 +1,91 @@
+1.  You have access to multiple clusters from your main terminal through kubectl contexts . Write all those context names into /opt/course/1/contexts
+Next wrtie a command to display the current context into /opt/course/1/context_default_kubectl.sh . The command should use kubectl
+Finally write a second command doing the same thing into opt/course/1context_default_no_kubectl.sh but without the use of kubectl
+
+Ans 
+ kubectl config current-context  
+cat ~/.kube/config | grep current | awk '{ print $2 }'
+
+2. Use kubectl config use-context k8s-c1-Ho
+Create a single pod of image httpd:2.4.41-alphine in the namespace default . The pod should be named pod1 and the container
+should be named pod1-container. The pod should only be scheduled on a master node . Do not add new labels to any node.
+
+3. Use context: kubectl config use-context k8s-c1-H
+There are two pods named o3b-* in namespace project-c13. C13 management asked you to scale the pods down to one replica to save resources
+
+4. Do the following in namespace default. Create a single pod named ready-if-service-ready of image nginx:1.16.1-alphine. Configure a livelinessProbe which simple runs true.
+Also configure a readnessProbe which does not check if the url http://service-am-i-ready:80 is reachable, you can use wget -T2 -o- http://service-am-i-ready:80 for this. 
+Start the pod and confirm it isn't ready because of the ReadinessProbe
+
+Create a second Pod named am-i-ready of image nginx:1.16.1-alphine with label id: cross-server-ready. The already existing Service service-am-i-ready should now have
+that second Pod as endpoint
+Now the first Pod should be in ready state, confirm that.
+
+5. Use context . Kubectl config use-context k8s-C1-H
+There are various Pods in all namespace. Write a command into /opt/course/5/find_pod.sh which list all Pods sorted by thier AGE (metadata.createTimestamp) 
+Wite a second command into /opt/courses/5/find_pods_uid.sh which lists all Pods sorted by field metadata.uid . Use kubectl sorting for both commands
+
+6. Use context . Kubectl config use-context k8s-C1-H
+
+Create a new PersistenttVolume named safari-pv. It should have a capacity of 2Gi, accessMode ReadWriteOnce, hostPath /Volumes/Data and no storageClassName defined.
+Next create a new PersistenttVolumeClaim in Namespace project-tiger named safari-pvc. 
+It should request 2Gi storage accessMode ReadWriteOnce and should not define a storageClassName
+.The PVC should bound to the PV correctly
+
+Finally create a new Deployment safari in Namespace project-tier which mounts that volume at /tmp/saafari-data. 
+The Pods of that Deployment should be of image httpd:2.4.41-alphine
+
+7.  Use context . Kubectl config use-context k8s-C1-H
+
+The metrics-server has ben installed in the cluster. YOur college would like to know the kubectl command to 
+1. SHow Nodes resource usage
+2. Show pods and their containers resource usage
+
+Please write the commands into /opt/course/7/node.sh and /opt/course/7/pod.sh
+
+8.  Use context . Kubectl config use-context k8s-C1-H
+ssh into the master node with ssh cluster1-master1. Check how the master components kubelet, kube-apiserver , 
+kube-scheduler, kube controller mamager and etcd are
+started/installed on the master node 
+
+Write your findings into file /opt/coure/8/master-components.txt. The file shold be structured like.
+
+# /opt/course/8/master-components.txt
+kubelet: [TYPE]
+kube-apiserver: [TYPE]
+kube-scheduler: [TYPE]
+kube-controller: manager: [TYPE]
+etcd: [TYPE]
+dns: [TYPE] [NAME]
+
+Choices of [TYPE] are not-instlled, process, sttic-pod, pod
+
+9.  Use context . Kubectl config use-context k8s-C2-H
+ssh into the master node with ssh cluster2-master1 Temporarily stop the kube-sceduler, this means in a way that you can strt it again
+afterwards
+
+Create a single pod named manual-schedule of image httpd:2.4-alphine, confim it's created but not shceduled on any node
+NOw you're the scheduler and have all it's power, manually schedule that Pod on node cluster2-master1. Make sure it's running
+
+Start the kube-scheduler again confirm it's running correctly by crating a second pod named manual-schedule2 of image httpd:2.4-alphine and check if it's running on
+cluster2-worker1
+
+10.  Use context . Kubectl config use-context k8s-C1-H
+
+Create a new serviceAccount processor in Namespace project-hampster. Create a Role and Rolebinding both named processor as well. 
+There should aloow the SA to only create Secrets and ConfigMaps in the Namespace
+
+11.   Use context . Kubectl config use-context k8s-C1-H
+Use Namespace project-tiger for the following. Create a DaemonSet named d-important with image httpd:2.4-alphine
+and labels id-ds important and uuid-18426a0b-5f59-4e10-923f-c0e078e82462. 
+The Pods it creates should request 10 millicore cpu and 10 mebibyte memory.
+THe Pods of that DaemonSet should run on all nodes master and worker.
+
+12. 
+
+
+
+
+
+
+

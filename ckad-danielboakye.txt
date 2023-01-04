@@ -1,0 +1,159 @@
+CKAD dveloper TEST
+-------------------
+
+1. Deploy a pod name nginx-4439 using the nginx:alphine image
+Ans:
+    kubectl run nginx-4439 --image=nginx:alphine --restart=Never
+2. Create a namespace names apx-z993845
+Ans:
+    k create ns apx-z993845
+3. Create a new deployment name httpd-frontend with 3 replicaset using image httpd:2.4-alphine
+Ans:
+    k create deployment httpd-frontend  --image=httpd:2.4-alphine --dry-run -o yaml >deploy.yaml
+    change replica to 3
+    k create deploy -f  deploy.yaml
+4. Deploy a messaging pod using the redis:alphine image with labels set to tier=msg
+5. A replicaset rs-d33393 is created. However the pods are not coming up. I dentify and fix the issue
+6. Once fixed ensure the Replicaset has  4 Ready replicas
+7. Create a service messaging-service to expose the redis deployment in the marketing namespace within the cluster on port 6379
+8. Update the environment variable on the pod webapp-color to use a green background
+9. Create a new configMap named cm-339845. Use the spec given on the right :
+             configName Name: cm-3392845
+             Data: DB_NAME-SQL3322
+             Data: DB_HSOT-sql322_mycompany.com
+10. Create a new secreet named db-secret-xxdf with the data given(on the right):
+            Secret name: db-secret-xxdf
+            secret 1: DB_HOST=sql01
+            secret 2: DB_User=root
+            Secret 3: DB_password=password123
+11. Update pod app-sec-kff3345 to run as Root user and wth the SYS_TIME capability
+            pod Name: app-sec-kff3345
+            image Name: ubuntu
+            securityContext: Capability SYS_TIME
+12. Export the logs of the e-com-1123 pd to the file opt/output/e-com-1123.logs
+Ans : k -n somenamespace logs pod e-com-1123 >  opt/output/e-com-1123.logs
+
+13. Create a persistent volume with the given specification
+            volume Name : pv-analytics
+            storage: 100M
+            Access modes: ReadWriteMany
+            Host path: /pv/data-analytics
+14. Create a redis deployment using the image redis:alphine with 1 replica and label app=redis. 
+Expose it via a clusterIP service called redis on port 6379. Create a new Ingress Type NetworkPolicy called redis-access which allowss only the pod 
+with label access=redis to accesss the deployment
+          image:redis-alphine 
+          deployment created correctly?
+          service created correctly?
+          NetworkPolicy allows the correct pods
+          Network policy applied on the correct pod
+
+15. Create a pod called sega with two containers
+          1. Container 1:name tails with image busybox and command: sleep 3600
+          2. Container 2: NAme Sonic with nginx and environment variable NGINX_PORT with the value 8000
+    - container Sonic has the correct ENV names
+    - Cntainer Sonic has the correct ENV value
+    - Container tails created correctly
+// PArt 3 https://www.youtube.com/watch?v=BiY3b7F96wc&t=341s
+16. Create a deployment called my-webpp with image: nginx , label tier:frontend and 2 replicas. Expose
+the deployment as Nodeport service with name frotend-service, port:80 and NodepPort:30083
+           Deployment my-webapp created
+           image:nginx
+           Replicas = 2
+           service font-end-service created?
+           service Type created correctlyCorrect node Port used?
+           
+17. Add a taint to the node node01 of the cluster. Use the specification below
+key:app_type, value:alpha and effect:NoSchedule
+Create a pod called alpha, image:redis with toleration to node01
+           node01 with the correct taint?
+           Pod alpha has the correct toleration?
+
+
+18. Apply a label app_type=beta to node node02. Create a new deployment called beta-apps with image:nginx and replicas:3
+Set Node Affinity to the deployment to place the PODs on node02 only
+NodeAffinity: requiredDuringSchedulingIgnoreDuringExeution
+            node02 has the correct labels
+            Deployment beta-apps:NodeAffinity set to requiredDuringSchedulingIgnoreDuringExeution?
+            Deployment beta-apps has correct key for NodeAffinity
+            Deployment beta-apps has correct value for NodeAffinity
+            Deployment beta-apps has pods running on node02
+            Deployment beta-apps has 3 pods running
+
+19. Create a new ingress Resource for the service: my-video-service to be made available at the URL: http://ckad-mock-exam-solution.com:300093/video
+Create an ingress resource with host: Ckad-mock-exam-solution.com path:/video
+Once setup, curl test of the URL from the nodes should be successful/HTTP 200
+(weight:12)
+            http://ckad-mock-exam-solution:30093/video accessible?
+
+20. We have deployed a new pod called pod-with-rprobe. This Pod has an initial delay before i is Ready. Update the newly created pod 
+pod-wth-rprobe with a readinessProbe 
+using the given specs
+hhtpGet path: /ready
+httpGet port: 8080
+                - readinessProbe with the correct hhtpGet path?
+                - readinessProbe with the correct hhtpGet port
+
+21. Create a new pod called nginx1401 in the default namespace with the image nginx. 
+Add a livenessProbe to the container to restart if the command is /vara/www/html/probe fails.
+This check should start after a delay of 10 seconds
+and run every 60 seconds
+You may delete and recreate the object. Ignore the warnings from the probe.
+                    Pod created with livenessProbe?
+
+22. Create a job called whalessy with image docker/whalesay and command "cowsays I am going to ace CKAD"
+completions:10
+backoffLimit:6
+restartPolicy:Never
+This simple job run the popular cowsay game that was modified by docker
+                Job "whalsay" uses correct image ?
+                Job "whalesay" configured with the completion = 107
+                Job whalesay with backoffLimit=6
+                Job "whalesay" completed sucessfully
+
+23. Create a pod called multi-pod with two containers. 
+Container 1: name: jupiter, image: nginx
+Container 2 : europa, image:busybox
+command:sleep 4800
+Enviroment variable: Container 1: type: planet
+Cntainer 2: type:moon
+
+24. Create a PersistenttVolume called custom-volume with size: 500 Mib
+reclaim policy:retain. Access Modes: ReadWriteMany and hostPath: /opt/data
+
+Lightening lab
+--------------
+
+1. Create a persistent volume called log-volume. It shouldl
+ make use of a storage class name manual
+It should use RWX as the acess mode and have a size of 1Gi. 
+The volume should use the hostpath opt/volume/nginx
+
+Next , create a PVC called log-claim requesting a minimum of 200 Mi of storage. 
+This PVC should bind to log-volume
+Mount this in a pod called logger at the location /var/www/nginx. 
+THis pod should use the image nginx:alphine
+
+2. We have deploye a new pod called secure-pod and a service called secure-service. 
+Incoming or outgoing connections to this pod are not working .
+Troubleshoot why this is happening.
+Make sure that incomming connection from the pod webapp-color are successful.
+
+Important: Don't delete any current objects from the pod.
+
+3. Create a pod time-check in the dv11987 namespace. This pod shoud run a container called 
+time-check that uses the busybox image
+
+- Create a config map called time-config with the dataTIME_FREQ=10 in the 
+same namespace
+- The time-check container 
+should run the command while true; do date ; sleep $TIME_FREQ; done
+and wrtie the result to the result to the location /opt/time/time-check.log
+- The path /opt/time on the pod should mount a volume that lasts the lifetime of this pod
+
+
+4. 
+Create a new deploymen called nginx-deploy with one single containercalled nginx.
+image nginx:1.16 and 4 replicas. The deployment should use RollingUpdates strategy with 
+maxSurge=1 and maxUnavailability =2 
+Next upgrade the deployment to version 1.17 using rolling update.
+Finally, once all pods are updated, undo the updates and go to the previous version.

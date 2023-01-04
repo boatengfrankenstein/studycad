@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: whalessy
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - command:
+        - cowsays
+        - I
+        - am
+        - going
+        - to
+        - ace
+        - CKAD
+        image: docker/whalesay
+        name: whalessy
+        resources: {}
+      restartPolicy: Never
+status: {}
